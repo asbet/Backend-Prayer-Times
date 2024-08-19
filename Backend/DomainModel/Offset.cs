@@ -1,6 +1,8 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Offset
+namespace PrayerTimes.DomainModel;
+
+public class Offset: BaseModel
 {
     public int Imsak { get; set; }
     public int Fajr { get; set; }

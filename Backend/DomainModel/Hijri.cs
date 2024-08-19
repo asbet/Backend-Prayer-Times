@@ -1,6 +1,8 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Hijri
+namespace PrayerTimes.DomainModel;
+
+public class Hijri: BaseModel
 {
     public required string Date { get; set; }
     public required string Format { get; set; }

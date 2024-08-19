@@ -1,8 +1,9 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Method
+namespace PrayerTimes.DomainModel;
+
+public class Method: BaseModel
 {
-    public required int Id { get; set; }
     public required string Name { get; set; }
     public required Params Params { get; set; }
 }

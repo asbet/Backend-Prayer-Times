@@ -1,6 +1,9 @@
-﻿namespace PrayerTimes.DomainModel;
-public  class Timings
+﻿using Backend.DomainModel;
+
+namespace PrayerTimes.DomainModel;
+public  class Timings: BaseModel
 {
+
     public required string Fajr { get; set; }
     public required string Sunrise { get; set; }
     public required string Dhuhr { get; set; }

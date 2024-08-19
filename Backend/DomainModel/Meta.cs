@@ -1,6 +1,8 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Meta
+namespace PrayerTimes.DomainModel;
+
+public class Meta: BaseModel
 {
     public double Latitude { get; set; }
     public double Longitude { get; set; }

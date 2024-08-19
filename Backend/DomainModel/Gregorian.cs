@@ -1,8 +1,9 @@
-﻿using static PrayerTimes.DomainModel.CalendarByCity;
+﻿using Backend.DomainModel;
+using static PrayerTimes.DomainModel.CalendarByCity;
 
 namespace PrayerTimes.DomainModel;
 
-public class Gregorian
+public class Gregorian: BaseModel
 {
     public required string Date { get; set; }
     public required string Format { get; set; }

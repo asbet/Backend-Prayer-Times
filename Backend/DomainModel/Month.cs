@@ -1,6 +1,8 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Month
+namespace PrayerTimes.DomainModel;
+
+public class Month: BaseModel
 {
     public required int Number { get; set; }
     public required string En { get; set; }

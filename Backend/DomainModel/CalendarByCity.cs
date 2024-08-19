@@ -1,8 +1,9 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class CalendarByCity
+namespace PrayerTimes.DomainModel;
+
+public class CalendarByCity: BaseModel
 {
-    // http://api.aladhan.com/v1/calendarByCity/:year/:month
     public required List<Datum> Data { get; set; }
 
 }

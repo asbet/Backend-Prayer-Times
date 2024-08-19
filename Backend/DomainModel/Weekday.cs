@@ -1,6 +1,8 @@
-﻿namespace PrayerTimes.DomainModel;
+﻿using Backend.DomainModel;
 
-public class Weekday
+namespace PrayerTimes.DomainModel;
+
+public class Weekday: BaseModel
 {
     public required string En { get; set; }
     public required string Ar { get; set; }

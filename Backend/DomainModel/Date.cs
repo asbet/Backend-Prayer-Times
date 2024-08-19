@@ -1,8 +1,9 @@
-﻿using static PrayerTimes.DomainModel.CalendarByCity;
+﻿using Backend.DomainModel;
+using static PrayerTimes.DomainModel.CalendarByCity;
 
 namespace PrayerTimes.DomainModel;
 
-public class Date
+public class Date : BaseModel
 {
     public required string Readable { get; set; }
     public required string Timestamp { get; set; }
