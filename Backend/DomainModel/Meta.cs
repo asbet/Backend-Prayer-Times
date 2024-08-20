@@ -2,8 +2,9 @@
 
 namespace PrayerTimes.DomainModel;
 
-public class Meta: BaseModel
+public class Meta : BaseModel
 {
+    public int MetaId { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public required string Timezone { get; set; }
@@ -11,6 +12,6 @@ public class Meta: BaseModel
     public required string LatitudeAdjustmentMethod { get; set; }
     public required string MidnightMode { get; set; }
     public required string School { get; set; }
-    public  required Offset Offset { get; set; }
+    public required Offset Offset { get; set; }
 }
 

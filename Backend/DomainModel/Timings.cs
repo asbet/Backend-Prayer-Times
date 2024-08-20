@@ -3,7 +3,7 @@
 namespace PrayerTimes.DomainModel;
 public  class Timings: BaseModel
 {
-
+    public int TimingsId { get; set; }
     public required string Fajr { get; set; }
     public required string Sunrise { get; set; }
     public required string Dhuhr { get; set; }

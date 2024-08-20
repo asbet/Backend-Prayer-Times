@@ -5,7 +5,6 @@ namespace Backend;
 
 public class PrayerTimesDbContext : DbContext
 {
-    //todo search about the migration
     public PrayerTimesDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -15,25 +14,27 @@ public class PrayerTimesDbContext : DbContext
             .HasMany(c => c.Data)
             .WithOne()
             .HasForeignKey(d => d.CalendarByCityId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction); 
 
         modelBuilder.Entity<Datum>()
             .HasOne(d => d.Timings)
             .WithOne()
-            .HasForeignKey<Datum>(d=>d.Id)
-            .OnDelete(DeleteBehavior.Cascade);
-         
+            .HasForeignKey<Timings>(d=>d.TimingsId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<Datum>()
             .HasOne(d => d.Date)
             .WithOne()
-            .HasForeignKey<Datum>(d=>d.Id)
-            .OnDelete(DeleteBehavior.Cascade); 
-        
+            .HasForeignKey<Date>(d=>d.DateId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Datum>()
             .HasOne(d => d.Meta)
             .WithOne()
-            .HasForeignKey<Datum>(d=>d.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<Meta>(d=>d.MetaId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        base.OnModelCreating(modelBuilder);
 
     }
 
