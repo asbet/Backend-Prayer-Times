@@ -1,10 +1,9 @@
 ﻿using Backend.DomainModel;
 
-namespace PrayerTimes.DomainModel;
+namespace Backend.Integration.AdhanAPI.Models;
 
-public class Meta : BaseModel
+public class Meta
 {
-    public int MetaId { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public required string Timezone { get; set; }

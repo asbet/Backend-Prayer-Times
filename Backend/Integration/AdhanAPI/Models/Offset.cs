@@ -1,10 +1,9 @@
 ﻿using Backend.DomainModel;
 
-namespace PrayerTimes.DomainModel;
+namespace Backend.Integration.AdhanAPI.Models;
 
-public class Offset: BaseModel
+public class Offset
 {
-    public int OffesetId { get; set; }
     public int Imsak { get; set; }
     public int Fajr { get; set; }
     public int Sunrise { get; set; }

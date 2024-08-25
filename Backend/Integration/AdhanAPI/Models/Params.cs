@@ -1,8 +1,8 @@
 ﻿using Backend.DomainModel;
 
-namespace PrayerTimes.DomainModel;
+namespace Backend.Integration.AdhanAPI.Models;
 
-public class Params: BaseModel
+public class Params
 {
     public int Fajr { get; set; }
     public int Isha { get; set; }

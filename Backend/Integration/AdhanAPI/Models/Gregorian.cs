@@ -1,10 +1,10 @@
 ﻿using Backend.DomainModel;
+using static Backend.Integration.AdhanAPI.Models.CalendarByCity;
 
-namespace PrayerTimes.DomainModel;
+namespace Backend.Integration.AdhanAPI.Models;
 
-public class Hijri : BaseModel
+public class Gregorian 
 {
-    public int? HijriId { get; set; }
     public required string Date { get; set; }
     public required string Format { get; set; }
     public required string Day { get; set; }
@@ -12,5 +12,4 @@ public class Hijri : BaseModel
     public required Month Month { get; set; }
     public required string Year { get; set; }
     public required Designation Designation { get; set; }
-    public required List<string> Holidays { get; set; }
 }

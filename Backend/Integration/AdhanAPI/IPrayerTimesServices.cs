@@ -1,9 +1,9 @@
-﻿using PrayerTimes.DomainModel;
+﻿using Backend.Integration.AdhanAPI.Models;
 using Refit;
 
-namespace Backend
+namespace Backend.Integration.AdhanAPI
 {
-    public interface PrayerTimesServices
+    public interface IPrayerTimesServices
     {
         //http://api.aladhan.com/v1/calendarByAddress/:year/:month
         //http://api.aladhan.com/v1/calendarByCity/2017/4?city=London&country=United%20Kingdom&method=2

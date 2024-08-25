@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Backend.DomainModel;
+using Backend.Integration.AdhanAPI;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -7,9 +9,9 @@ namespace Backend.Controllers
     [ApiController]
     public class PrayerTimesController : ControllerBase
     {
-        PrayerTimesServices services;
+        IPrayerTimesServices services;
 
-        public PrayerTimesController(PrayerTimesServices services)
+        public PrayerTimesController(IPrayerTimesServices services)
         {
             this.services = services;
         }
@@ -20,6 +22,7 @@ namespace Backend.Controllers
             try
             {
                 var prayerTimes = await services.GetTimes(year, month, city, country, method);
+
                 return Ok(prayerTimes);
             }
             catch (Exception ex)

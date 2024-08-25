@@ -5,7 +5,7 @@
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InialDatabase : Migration
+    public partial class InitialEF : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -182,7 +182,7 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HijriId = table.Column<int>(type: "int", nullable: false),
+                    HijriId = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Format = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Day = table.Column<string>(type: "nvarchar(max)", nullable: false),

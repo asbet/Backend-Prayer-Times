@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PrayerTimes.DomainModel;
+﻿using Backend.Integration.AdhanAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend;
 
@@ -16,19 +16,19 @@ public class PrayerTimesDbContext : DbContext
             .HasForeignKey(d => d.CalendarByCityId)
             .OnDelete(DeleteBehavior.NoAction); 
 
-        modelBuilder.Entity<Datum>()
+        modelBuilder.Entity<CalendarDay>()
             .HasOne(d => d.Timings)
             .WithOne()
             .HasForeignKey<Timings>(d=>d.TimingsId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        modelBuilder.Entity<Datum>()
+        modelBuilder.Entity<CalendarDay>()
             .HasOne(d => d.Date)
             .WithOne()
             .HasForeignKey<Date>(d=>d.DateId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Datum>()
+        modelBuilder.Entity<CalendarDay>()
             .HasOne(d => d.Meta)
             .WithOne()
             .HasForeignKey<Meta>(d=>d.MetaId)

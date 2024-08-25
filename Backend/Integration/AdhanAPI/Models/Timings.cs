@@ -1,9 +1,8 @@
 ﻿using Backend.DomainModel;
 
-namespace PrayerTimes.DomainModel;
-public  class Timings: BaseModel
+namespace Backend.Integration.AdhanAPI.Models;
+public class Timings
 {
-    public int TimingsId { get; set; }
     public required string Fajr { get; set; }
     public required string Sunrise { get; set; }
     public required string Dhuhr { get; set; }
@@ -14,4 +13,3 @@ public  class Timings: BaseModel
     public required string Imsak { get; set; }
     public required string Midnight { get; set; }
 }
-    

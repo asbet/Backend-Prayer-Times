@@ -1,10 +1,9 @@
 ﻿using Backend.DomainModel;
 
-namespace PrayerTimes.DomainModel;
+namespace Backend.Integration.AdhanAPI.Models;
 
-public class Month: BaseModel
+public class Weekday
 {
-    public required int Number { get; set; }
     public required string En { get; set; }
     public required string Ar { get; set; }
 }
