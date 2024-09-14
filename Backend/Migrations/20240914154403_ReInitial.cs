@@ -6,11 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class initial_database : Migration
+    public partial class ReInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "City",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_City", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "PrayerTimings",
                 columns: table => new
@@ -27,48 +40,34 @@ namespace Backend.Migrations
                     Imsak = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Midnight = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GregorianDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    HijriDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    HijriDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PrayerTimings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "City",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_City", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_City_PrayerTimings_CityId",
+                        name: "FK_PrayerTimings_City_CityId",
                         column: x => x.CityId,
-                        principalTable: "PrayerTimings",
+                        principalTable: "City",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_CityId",
-                table: "City",
-                column: "CityId",
-                unique: true);
+                name: "IX_PrayerTimings_CityId",
+                table: "PrayerTimings",
+                column: "CityId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "City");
+                name: "PrayerTimings");
 
             migrationBuilder.DropTable(
-                name: "PrayerTimings");
+                name: "City");
         }
     }
 }

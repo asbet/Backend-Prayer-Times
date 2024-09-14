@@ -1,6 +1,7 @@
 ﻿using Backend.Integration.AdhanAPI;
 using Backend;
 using Microsoft.AspNetCore.Mvc;
+using Backend.DomainModel;
 
 [Route("api/[controller]")]
 public class PrayerTimesController : ControllerBase
@@ -29,16 +30,41 @@ public class PrayerTimesController : ControllerBase
         try
         {
             var prayerTimes = await services.GetTimes(year, month, city, country, method);
-            await prayerTimingService.SavePrayerTimingsAsync(prayerTimes, city);
 
-            return Ok(prayerTimes);
+            City selectedCity= new City{Name=city};
+
+            await prayerTimingService.SavePrayerTimingsAsync(prayerTimes, selectedCity);
+            PrayerTiming dto = null;
+            foreach (var times in prayerTimes.Data)
+            {
+                dto = new PrayerTiming
+                {
+
+                    Sunrise = times.Timings.Sunrise,
+                    Fajr = times.Timings.Fajr,
+                    City=selectedCity,
+                    Dhuhr = times.Timings.Dhuhr,
+                    Asr = times.Timings.Asr,
+                    Sunset = times.Timings.Sunset,
+                    Maghrib = times.Timings.Maghrib,
+                    Isha = times.Timings.Isha,
+                    Imsak = times.Timings.Imsak,
+                    Midnight = times.Timings.Midnight,
+                    GregorianDate = DateTimeOffset.Parse(times.Date.Gregorian.Date),
+                    HijriDate = DateTimeOffset.Parse(times.Date.Hijri.Date),
+
+                };
+            }
+
+
+            return Ok(dto);
         }
         catch (Exception ex)
         {
-           
+
             logger.LogError(ex, "An error occurred while fetching prayer times for {City}, {Country}.", city, country);
 
-            
+
             return StatusCode(500, $"An error occurred: {ex.Message}");
         }
     }

@@ -10,11 +10,14 @@ public class PrayerTimesDbContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
         modelBuilder.Entity<PrayerTiming>()
-            .HasOne(c => c.City)
-            .WithOne()
-            .HasForeignKey<City>(d => d.CityId)
-            .OnDelete(DeleteBehavior.Cascade);
+     .HasOne(pt => pt.City)
+     .WithMany() 
+     .HasForeignKey(pt => pt.CityId) 
+     .OnDelete(DeleteBehavior.Cascade);
+
 
         base.OnModelCreating(modelBuilder);
 

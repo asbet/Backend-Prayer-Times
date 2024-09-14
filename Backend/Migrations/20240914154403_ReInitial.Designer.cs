@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(PrayerTimesDbContext))]
-    [Migration("20240907150302_initial_database")]
-    partial class initial_database
+    [Migration("20240914154403_ReInitial")]
+    partial class ReInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,17 +33,11 @@ namespace Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId")
-                        .IsUnique();
 
                     b.ToTable("City");
                 });
@@ -59,6 +53,9 @@ namespace Backend.Migrations
                     b.Property<string>("Asr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Dhuhr")
                         .IsRequired()
@@ -100,22 +97,19 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrayerTimings");
-                });
+                    b.HasIndex("CityId");
 
-            modelBuilder.Entity("Backend.DomainModel.City", b =>
-                {
-                    b.HasOne("Backend.DomainModel.PrayerTiming", null)
-                        .WithOne("City")
-                        .HasForeignKey("Backend.DomainModel.City", "CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("PrayerTimings");
                 });
 
             modelBuilder.Entity("Backend.DomainModel.PrayerTiming", b =>
                 {
-                    b.Navigation("City")
-                        .IsRequired();
+                    b.HasOne("Backend.DomainModel.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("City");
                 });
 #pragma warning restore 612, 618
         }
