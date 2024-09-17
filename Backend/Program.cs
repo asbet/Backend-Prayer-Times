@@ -50,7 +50,9 @@ builder.Services.AddDbContext<PrayerTimesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PrayerConnection")));
 
 
-builder.Services.AddScoped<PrayerTimingService>();  
+builder.Services.AddScoped<PrayerTimingService>();
+builder.Services.AddHostedService<RefreshingDatas>();
+
 
 var app = builder.Build();
 
