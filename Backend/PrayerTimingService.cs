@@ -1,4 +1,5 @@
 ﻿using Backend.DomainModel;
+using Backend.DomainModel.DTOs;
 using Backend.Integration.AdhanAPI;
 
 namespace Backend;

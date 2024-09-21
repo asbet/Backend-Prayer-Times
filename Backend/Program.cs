@@ -51,7 +51,7 @@ builder.Services.AddDbContext<PrayerTimesDbContext>(options =>
 
 
 builder.Services.AddScoped<PrayerTimingService>();
-builder.Services.AddHostedService<RefreshingDatas>();
+builder.Services.AddHostedService<WCheckingTimes>();
 
 
 var app = builder.Build();

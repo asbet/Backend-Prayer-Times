@@ -1,4 +1,5 @@
 ﻿using Backend.DomainModel;
+using Backend.DomainModel.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend;
@@ -19,11 +20,15 @@ public class PrayerTimesDbContext : DbContext
      .OnDelete(DeleteBehavior.Cascade);
 
 
+        modelBuilder.Entity<CheckingTimes>();
+
+
         base.OnModelCreating(modelBuilder);
 
     }
 
 
     public DbSet<PrayerTiming> PrayerTimings { get; set; }
+    public DbSet<CheckingTimes> CheckingTimes { get; set; }
 
 }

@@ -1,4 +1,4 @@
-﻿using Backend.DomainModel;
+﻿using Backend.DomainModel.DTOs;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Xml;
@@ -7,7 +7,7 @@ namespace Backend;
 
 public class RefreshingDatas
 {
-    private DateTime LastRefreshTime;
+   /* private DateTime LastRefreshTime;
 
     private readonly IServiceScopeFactory ScopeFactory;
 
@@ -40,6 +40,6 @@ public class RefreshingDatas
             }
         }
     }
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;*/
 
 }

@@ -1,6 +1,7 @@
 ﻿using Backend.Integration.AdhanAPI;
 using Backend;
 using Microsoft.AspNetCore.Mvc;
+using Backend.DomainModel.DTOs;
 using Backend.DomainModel;
 
 [Route("api/[controller]")]
@@ -9,14 +10,17 @@ public class PrayerTimesController : ControllerBase
     private readonly IPrayerTimesServices services;
     private readonly PrayerTimingService prayerTimingService;
     private readonly ILogger<PrayerTimesController> logger;
+    private readonly PrayerTimesDbContext _context;
+
 
     public PrayerTimesController(IPrayerTimesServices services,
                                  PrayerTimingService prayerTimingService,
-                                 ILogger<PrayerTimesController> logger)
+                                 ILogger<PrayerTimesController> logger,PrayerTimesDbContext context)
     {
         this.services = services;
         this.prayerTimingService = prayerTimingService;
         this.logger = logger;
+        this._context = context;
     }
 
     [HttpGet("{year}/{month}")]
@@ -55,6 +59,10 @@ public class PrayerTimesController : ControllerBase
 
                 };
             }
+            CheckingTimes checking=new();
+            checking.SavedDate = DateTimeOffset.UtcNow;
+            _context.CheckingTimes.Add(checking);
+            await _context.SaveChangesAsync();
 
 
             return Ok(dto);
