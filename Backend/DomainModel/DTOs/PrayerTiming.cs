@@ -16,7 +16,4 @@ public class PrayerTiming
     public required DateTimeOffset HijriDate { get; set; }
     public required City City { get; set; }
     public int? CityId { get; set; }
-    
-    //todo 
-    public int? CheckingTimesId { get; set; }
 }

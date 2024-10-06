@@ -10,17 +10,15 @@ public class PrayerTimesController : ControllerBase
     private readonly IPrayerTimesServices services;
     private readonly PrayerTimingService prayerTimingService;
     private readonly ILogger<PrayerTimesController> logger;
-    private readonly PrayerTimesDbContext _context;
 
 
     public PrayerTimesController(IPrayerTimesServices services,
                                  PrayerTimingService prayerTimingService,
-                                 ILogger<PrayerTimesController> logger,PrayerTimesDbContext context)
+                                 ILogger<PrayerTimesController> logger)
     {
         this.services = services;
         this.prayerTimingService = prayerTimingService;
         this.logger = logger;
-        this._context = context;
     }
 
     [HttpGet("{year}/{month}")]
@@ -35,7 +33,7 @@ public class PrayerTimesController : ControllerBase
         {
             var prayerTimes = await services.GetTimes(year, month, city, country, method);
 
-            City selectedCity= new City{Name=city};
+            City selectedCity= new City{CityName=city,CountryName=country};
 
             await prayerTimingService.SavePrayerTimingsAsync(prayerTimes, selectedCity);
             PrayerTiming dto = null;
@@ -59,19 +57,14 @@ public class PrayerTimesController : ControllerBase
 
                 };
             }
-            CheckingTimes checking=new();
-            checking.SavedDate = DateTimeOffset.UtcNow;
-            _context.CheckingTimes.Add(checking);
-            await _context.SaveChangesAsync();
-
 
             return Ok(dto);
+
         }
         catch (Exception ex)
         {
 
             logger.LogError(ex, "An error occurred while fetching prayer times for {City}, {Country}.", city, country);
-
 
             return StatusCode(500, $"An error occurred: {ex.Message}");
         }
