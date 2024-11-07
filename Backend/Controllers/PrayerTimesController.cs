@@ -1,25 +1,19 @@
-﻿using Backend.Integration.AdhanAPI;
-using Backend;
+﻿using Backend.DomainModel.DTOs;
+using Backend.Integration.AdhanAPI;
+using Backend.Notification;
 using Microsoft.AspNetCore.Mvc;
-using Backend.DomainModel.DTOs;
-using Backend.DomainModel;
+
+namespace Backend.Controllers;
 
 [Route("api/[controller]")]
-public class PrayerTimesController : ControllerBase
+public class PrayerTimesController(
+    IPrayerTimesServices services,
+    PrayerTimingService prayerTimingService,
+    ILogger<PrayerTimesController> logger,
+    FCMNotification notificationService)
+    : ControllerBase
 {
-    private readonly IPrayerTimesServices services;
-    private readonly PrayerTimingService prayerTimingService;
-    private readonly ILogger<PrayerTimesController> logger;
 
-
-    public PrayerTimesController(IPrayerTimesServices services,
-                                 PrayerTimingService prayerTimingService,
-                                 ILogger<PrayerTimesController> logger)
-    {
-        this.services = services;
-        this.prayerTimingService = prayerTimingService;
-        this.logger = logger;
-    }
 
     [HttpGet("{year}/{month}")]
     public async Task<ActionResult<CalendarByCity>> GetPrayerTimes(int year, int month, [FromQuery] string city, [FromQuery] string country, [FromQuery] int method)
@@ -57,6 +51,7 @@ public class PrayerTimesController : ControllerBase
 
                 };
             }
+            await notificationService.SendFCMNotification(dto.Asr, dto.Asr, "");
 
             return Ok(dto);
 

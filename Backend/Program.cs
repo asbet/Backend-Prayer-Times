@@ -3,6 +3,8 @@ using Refit;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Backend.Integration.AdhanAPI;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +33,10 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://example.com/license")
         }
     });
+});
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("Firebase/google-service-account.json")
 });
 
 var refitSettings = new RefitSettings
