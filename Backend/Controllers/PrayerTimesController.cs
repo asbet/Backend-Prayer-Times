@@ -1,4 +1,5 @@
-﻿using Backend.DomainModel.DTOs;
+﻿using System.Globalization;
+using Backend.DomainModel.DTOs;
 using Backend.Integration.AdhanAPI;
 using Backend.Notification;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,7 @@ namespace Backend.Controllers;
 public class PrayerTimesController(
     IPrayerTimesServices services,
     PrayerTimingService prayerTimingService,
-    ILogger<PrayerTimesController> logger,
-    FCMNotification notificationService)
+    ILogger<PrayerTimesController> logger)
     : ControllerBase
 {
 
@@ -46,12 +46,11 @@ public class PrayerTimesController(
                     Isha = times.Timings.Isha,
                     Imsak = times.Timings.Imsak,
                     Midnight = times.Timings.Midnight,
-                    GregorianDate = DateTimeOffset.Parse(times.Date.Gregorian.Date),
-                    HijriDate = DateTimeOffset.Parse(times.Date.Hijri.Date),
+                    GregorianDate = DateTimeOffset.ParseExact(times.Date.Gregorian.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    HijriDate = DateTimeOffset.ParseExact(times.Date.Hijri.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
 
                 };
             }
-            await notificationService.SendFCMNotification(dto.Asr, dto.Asr, "");
 
             return Ok(dto);
 

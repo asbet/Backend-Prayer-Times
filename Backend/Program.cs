@@ -50,7 +50,7 @@ var refitSettings = new RefitSettings
 
 builder.Services
     .AddRefitClient<IPrayerTimesServices>(refitSettings)
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://api.aladhan.com"));
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.aladhan.com"));
 
 builder.Services.AddDbContext<PrayerTimesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PrayerConnection")));
@@ -59,6 +59,11 @@ builder.Services.AddDbContext<PrayerTimesDbContext>(options =>
 builder.Services.AddScoped<PrayerTimingService>();
 builder.Services.AddHostedService<WCheckingTimes>();
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
 
 var app = builder.Build();
 

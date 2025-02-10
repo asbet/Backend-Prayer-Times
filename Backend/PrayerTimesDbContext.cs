@@ -14,10 +14,17 @@ public class PrayerTimesDbContext : DbContext
 
 
         modelBuilder.Entity<PrayerTiming>()
-     .HasOne(pt => pt.City)
-     .WithMany() 
-     .HasForeignKey(pt => pt.CityId) 
-     .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(pt => pt.City)
+            .WithOne(ct => ct.PrayerTiming)
+            .HasForeignKey<City>(pt => pt.CityId) 
+            .IsRequired();
+        
+        
+        modelBuilder.Entity<PrayerTiming>()
+            .HasMany(tkn => tkn.FcmTokens)
+            .WithOne(tkn => tkn.PrayerTiming)
+            .HasForeignKey(pt => pt.TokenId) 
+            .IsRequired();
 
 
         base.OnModelCreating(modelBuilder);

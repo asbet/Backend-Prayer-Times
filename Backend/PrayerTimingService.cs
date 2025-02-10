@@ -1,4 +1,5 @@
-﻿using Backend.DomainModel;
+﻿using System.Globalization;
+using Backend.DomainModel;
 using Backend.DomainModel.DTOs;
 using Backend.Integration.AdhanAPI;
 
@@ -29,8 +30,9 @@ public class PrayerTimingService
                 Maghrib = timing.Timings.Maghrib,
                 Isha = timing.Timings.Isha,
                 Midnight = timing.Timings.Midnight,
-                GregorianDate = DateTimeOffset.Parse(timing.Date.Gregorian.Date),
-                HijriDate = DateTimeOffset.Parse(timing.Date.Gregorian.Date),
+                GregorianDate = DateTimeOffset.ParseExact(timing.Date.Gregorian.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                HijriDate = DateTimeOffset.ParseExact(timing.Date.Hijri.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+
                 City = city,
                
             };
