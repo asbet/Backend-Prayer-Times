@@ -4,9 +4,9 @@ namespace Backend.Notification;
 
 public class FCMNotification
 {
-    public async Task SendFCMNotification(string title, string body, string deviceToken)
+    public async Task<string> SendNotificationAsync(string deviceToken, string title, string body)
     {
-        var message = new Message
+        var message = new Message()
         {
             Notification = new FirebaseAdmin.Messaging.Notification
             {
@@ -16,14 +16,7 @@ public class FCMNotification
             Token = deviceToken
         };
 
-        try
-        {
-            string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
-            Console.WriteLine($"Successfully sent message: {response}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error sending message: {ex.Message}");
-        }
+        var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+        return response; // This is the message ID
     }
 }

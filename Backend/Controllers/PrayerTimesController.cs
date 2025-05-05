@@ -15,8 +15,8 @@ public class PrayerTimesController(
 {
 
 
-    [HttpGet("{year}/{month}")]
-    public async Task<ActionResult<CalendarByCity>> GetPrayerTimes(int year, int month, [FromQuery] string city, [FromQuery] string country, [FromQuery] int method)
+    [HttpGet("{year}/{month}/{city}/{country}")]
+    public async Task<ActionResult<CalendarByCity>> GetPrayerTimes(int year, int month,string city,string country, [FromQuery] int method)
     {
         if (string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
         {

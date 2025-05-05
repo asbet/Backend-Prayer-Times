@@ -16,15 +16,17 @@ public class PrayerTimesDbContext : DbContext
         modelBuilder.Entity<PrayerTiming>()
             .HasOne(pt => pt.City)
             .WithOne(ct => ct.PrayerTiming)
-            .HasForeignKey<City>(pt => pt.CityId) 
+            .HasForeignKey<City>(pt => pt.CityId)
             .IsRequired();
-        
-        
+
+
         modelBuilder.Entity<PrayerTiming>()
             .HasMany(tkn => tkn.FcmTokens)
             .WithOne(tkn => tkn.PrayerTiming)
-            .HasForeignKey(pt => pt.TokenId) 
+            .HasForeignKey(pt => pt.TokenId)
             .IsRequired();
+
+        modelBuilder.Entity<TestModel>();
 
 
         base.OnModelCreating(modelBuilder);
@@ -32,6 +34,9 @@ public class PrayerTimesDbContext : DbContext
     }
 
 
+    public DbSet<DeviceInfo> Devices { get; set; }
+
     public DbSet<PrayerTiming> PrayerTimings { get; set; }
+    public DbSet<TestModel> TestModels { get; set; }
 
 }
