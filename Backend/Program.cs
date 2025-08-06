@@ -1,6 +1,7 @@
 using Backend;
 using Refit;
 using System.Text.Json;
+using Backend.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Backend.Integration.AdhanAPI;
 using Backend.Notification;
@@ -11,6 +12,15 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 DotNetEnv.Env.Load();
+// Configure Kestrel with fixed ports
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5038); // HTTP
+    options.ListenAnyIP(5039, listenOptions => // HTTPS
+    {
+        listenOptions.UseHttps(); // Uses development certificate
+    });
+});
 Console.WriteLine($"uhkhj '{Environment.GetEnvironmentVariable("MESSAGE")}'");
 builder.Services.AddControllers();
 
@@ -46,14 +56,14 @@ FirebaseApp.Create(new AppOptions
 builder.Services.AddScoped<FCMNotification>();
 
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5038); // HTTP
-    options.ListenAnyIP(44383, listenOptions =>
-    {
-        listenOptions.UseHttps(); // Enable HTTPS
-    });
-});
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5038); // HTTP
+//    options.ListenAnyIP(44383, listenOptions =>
+//    {
+//        listenOptions.UseHttps(); // Enable HTTPS
+//    });
+//});
 
 
 var refitSettings = new RefitSettings
@@ -74,15 +84,42 @@ builder.Services.AddDbContext<PrayerTimesDbContext>(options =>
 
 
 builder.Services.AddScoped<PrayerTimingService>();
-builder.Services.AddScoped<TestService>(); 
-builder.Services.AddHostedService<WCheckingTimes>();
+
+builder.Services.AddScoped<TestService>();
+builder.Services.AddHostedService<PrayerNotificationService>();
+
+builder.Services.AddScoped<CheckExistDatas>();
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = null;
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true; // Optional: for pretty JSON
     });
-
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", builder => {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetPreflightMaxAge(TimeSpan.FromMinutes(10)); // Important for POST
+    });
+});
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = long.MaxValue;
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFlutter",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 app.UseCors(builder => builder
@@ -92,6 +129,8 @@ app.UseCors(builder => builder
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors("AllowFlutter");
+
 
 
 app.UseHttpsRedirection();

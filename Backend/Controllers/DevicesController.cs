@@ -31,6 +31,7 @@ public class DevicesController : ControllerBase
             existing.Version = info.Version;
             existing.Platform = info.Platform;
             existing.RegisteredAt = DateTime.UtcNow;
+            existing.Location = info.Location;
         }
         else
         {

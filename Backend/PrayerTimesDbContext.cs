@@ -9,14 +9,13 @@ public class PrayerTimesDbContext : DbContext
     public PrayerTimesDbContext(DbContextOptions options) : base(options)
     {
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-
         modelBuilder.Entity<PrayerTiming>()
             .HasOne(pt => pt.City)
-            .WithOne(ct => ct.PrayerTiming)
-            .HasForeignKey<City>(pt => pt.CityId)
+            .WithMany(c => c.PrayerTimings)
+            .HasForeignKey(pt => pt.CityId)
             .IsRequired();
 
 
@@ -30,7 +29,6 @@ public class PrayerTimesDbContext : DbContext
 
 
         base.OnModelCreating(modelBuilder);
-
     }
 
 
@@ -38,5 +36,4 @@ public class PrayerTimesDbContext : DbContext
 
     public DbSet<PrayerTiming> PrayerTimings { get; set; }
     public DbSet<TestModel> TestModels { get; set; }
-
 }

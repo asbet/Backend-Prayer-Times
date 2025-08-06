@@ -1,12 +1,16 @@
-﻿namespace Backend.DomainModel.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Backend.DomainModel.DTOs;
 
 public class City
 {
-    public int Id { get; set; }
-    public required string CityName { get; set; }
-    public required string CountryName { get; set; }
-    
-    public PrayerTiming PrayerTiming { get; set; } = null!;
-    
-    public int? CityId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int CityId { get; set; }
+
+    [MaxLength(1500)] public required string CityName { get; set; }
+    [MaxLength(1500)] public required string CountryName { get; set; }
+
+    public ICollection<PrayerTiming> PrayerTimings { get; set; } = new List<PrayerTiming>();
 }
