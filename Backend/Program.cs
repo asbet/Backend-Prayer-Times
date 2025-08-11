@@ -21,7 +21,6 @@ builder.WebHost.ConfigureKestrel(options =>
         listenOptions.UseHttps(); // Uses development certificate
     });
 });
-Console.WriteLine($"uhkhj '{Environment.GetEnvironmentVariable("MESSAGE")}'");
 builder.Services.AddControllers();
 
 
