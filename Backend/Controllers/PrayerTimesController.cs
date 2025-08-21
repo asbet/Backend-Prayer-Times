@@ -29,7 +29,7 @@ public class PrayerTimesController(
             var prayerTimes = await services.GetTimes(year, month, city, country, method);
 
             // City selectedCity22 = new City { CityName = city, CountryName = country };
-            
+
             var selectedCity = await checkExistDatas.GetOrCreateCityAsync(city, country);
 
             if (await checkExistDatas.IsPrayerTimingAlreadySavedAsync(year, month, selectedCity))
@@ -40,8 +40,31 @@ public class PrayerTimesController(
             await prayerTimingService.SavePrayerTimingsAsync(prayerTimes, selectedCity);
 
             PrayerTiming dto = null;
+            var hijriCalendar = new UmAlQuraCalendar();
+            DateTimeOffset? hijriDate = null;
+
+
             foreach (var times in prayerTimes.Data)
             {
+                try
+                {
+                    var parts = times.Date.Hijri.Date.Split('-');
+                    if (parts.Length == 3)
+                    {
+                        int day = int.Parse(parts[0]);
+                        int iMonth = int.Parse(parts[1]);
+                        int iYear = int.Parse(parts[2]);
+
+                        // Construct Hijri Date using UmAlQuraCalendar
+                        var date = new DateTime(iYear, iMonth, day, hijriCalendar);
+                        hijriDate = new DateTimeOffset(date);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Invalid Hijri date received: {Date}", times.Date.Hijri.Date);
+                }
+
                 dto = new PrayerTiming
                 {
                     Sunrise = times.Timings.Sunrise,
@@ -56,8 +79,7 @@ public class PrayerTimesController(
                     Midnight = times.Timings.Midnight,
                     GregorianDate = DateTimeOffset.ParseExact(times.Date.Gregorian.Date, "dd-MM-yyyy",
                         CultureInfo.InvariantCulture),
-                    HijriDate = DateTimeOffset.ParseExact(times.Date.Hijri.Date, "dd-MM-yyyy",
-                        CultureInfo.InvariantCulture),
+                    HijriDate =  hijriDate ,
                 };
             }
 
