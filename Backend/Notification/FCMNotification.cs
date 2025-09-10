@@ -4,19 +4,51 @@ namespace Backend.Notification;
 
 public class FCMNotification
 {
-    public async Task<string> SendNotificationAsync(string deviceToken, string title, string body)
-    {
-        var message = new Message()
-        {
-            Notification = new FirebaseAdmin.Messaging.Notification
-            {
-                Title = title,
-                Body = body
-            },
-            Token = deviceToken
-        };
+    private readonly ILogger<FCMNotification> _logger;
 
-        var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
-        return response; // This is the message ID
+    public FCMNotification(ILogger<FCMNotification> logger)
+    {
+        _logger = logger;
+    }
+
+    public async Task<bool> SendNotificationAsync(string deviceToken, string title, string body)
+    {
+        try
+        {
+            var message = new Message()
+            {
+                Token = deviceToken,
+                Notification = new FirebaseAdmin.Messaging.Notification()
+                {
+                    Title = title,
+                    Body = body
+                },
+                Android = new AndroidConfig
+                {
+                    Priority = Priority.High
+                },
+                Apns = new ApnsConfig
+                {
+                    Headers = new Dictionary<string, string>
+                    {
+                        { "apns-priority", "10" }
+                    }
+                }
+            };
+
+            var result = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            _logger.LogInformation("Successfully sent message: {MessageId}", result);
+            return true;
+        }
+        catch (FirebaseMessagingException ex)
+        {
+            _logger.LogError(ex, "FCM error for token: {Token}", deviceToken);
+            throw; // Re-throw to let caller handle
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error sending notification");
+            return false;
+        }
     }
 }

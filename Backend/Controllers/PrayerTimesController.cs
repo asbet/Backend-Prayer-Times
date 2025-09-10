@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Backend.Configuration;
 using Backend.DomainModel.DTOs;
 using Backend.Integration.AdhanAPI;
@@ -15,7 +16,9 @@ public class PrayerTimesController(
     ILogger<PrayerTimesController> logger)
     : ControllerBase
 {
+    
     [HttpGet("{year}/{month}/{city}/{country}")]
+    [SuppressMessage("ReSharper.DPA", "DPA0011: High execution time of MVC action", MessageId = "time: 1089ms")]
     public async Task<ActionResult<CalendarByCity>> GetPrayerTimes(int year, int month, string city, string country,
         [FromQuery] int method)
     {
@@ -27,8 +30,6 @@ public class PrayerTimesController(
         try
         {
             var prayerTimes = await services.GetTimes(year, month, city, country, method);
-
-            // City selectedCity22 = new City { CityName = city, CountryName = country };
 
             var selectedCity = await checkExistDatas.GetOrCreateCityAsync(city, country);
 
