@@ -1,6 +1,7 @@
 using Backend;
 using Refit;
 using System.Text.Json;
+using Backend.Application.Services;
 using Backend.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Backend.Integration.AdhanAPI;
@@ -86,6 +87,9 @@ builder.Services.AddScoped<PrayerTimingService>();
 
 builder.Services.AddScoped<TestService>();
 builder.Services.AddHostedService<PrayerNotificationService>();
+builder.Services.AddHostedService<PrayerCleanupService>();
+builder.Services.AddScoped<PrayerTimesDailyService>();
+
 
 builder.Services.AddScoped<CheckExistDatas>();
 
