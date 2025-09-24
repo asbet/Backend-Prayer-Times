@@ -1,4 +1,6 @@
-﻿namespace Backend.DomainModel.DTOs;
+﻿using Newtonsoft.Json;
+
+namespace Backend.DomainModel.DTOs;
 
 public class PrayerTiming
 {
@@ -13,7 +15,9 @@ public class PrayerTiming
     public required string Imsak { get; set; }
     public required string Midnight { get; set; }
     public required DateTimeOffset GregorianDate { get; set; }
-    public required DateTimeOffset HijriDate { get; set; }
+    public required DateTimeOffset? HijriDate { get; set; }
+    
+    public int CityId { get; set; }
     public required City City { get; set; }
-    public int? CityId { get; set; }
+    public ICollection<FcmToken> FcmTokens { get; } = new List<FcmToken>();
 }

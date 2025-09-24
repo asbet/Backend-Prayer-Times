@@ -1,0 +1,18 @@
+﻿# Build result
+
+# User-specific files
+
+# Configuration files
+appsettings.Development.json
+*.env
+
+# Database and logs
+
+
+# Dependency packages
+
+
+# Publish output
+
+#Google Services
+Firebase/google-service-account.json
