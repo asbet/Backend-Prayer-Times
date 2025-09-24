@@ -74,11 +74,13 @@ GET /api/MonthlyPrayerTimes/{city}/{country}/{year}/{month}
 
 🔔 Firebase Integration
 
-1.This project supports push notifications for upcoming prayers.
-2.Create a Firebase project.
-3.Get your Server Key from the Firebase console.
-4.Add it to appsettings.json under "Firebase".
-5.Devices can register using the /api/Notifications/register endpoint.
+Create a Firebase project.
+
+Get your Server Key from the Firebase console.
+
+Add it to appsettings.json under "Firebase".
+
+Devices can register using the /api/Notifications/register endpoint.
 
 ---
 🗄 Database Notes
@@ -98,8 +100,10 @@ Scheduled cleanup of old prayer times is included.
 ---
 
 🤝 Contributing
-1.Pull requests are welcome!
-2.Fork the repo
-3.Create a branch
-4.Commit changes
-5.Open a PR
+Fork the repo
+
+Create a branch
+
+Commit changes
+
+Open a PR
