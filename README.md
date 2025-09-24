@@ -23,6 +23,20 @@ Additionally, it integrates with **Firebase Cloud Messaging (FCM)** to send noti
 
 ---
 
+
+🔔 Firebase Integration
+This project supports push notifications for upcoming prayers via Firebase Cloud Messaging (FCM).
+
+Create a Firebase project.
+
+Get your Server Key from Firebase console.
+
+Add it to appsettings.json under "Firebase".
+
+The backend will send notifications to registered devices.
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
