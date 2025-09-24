@@ -61,3 +61,45 @@ Create or edit appsettings.Development.json:
 
 ### 3. Apply Database Migrations
 dotnet ef database update
+
+---
+📡 API Endpoints
+### 1. Daily Prayer Times
+GET /api/DailyPrayerTimes/today/{city}/{country}
+
+### 2. Monthly Prayer Times
+GET /api/MonthlyPrayerTimes/{city}/{country}/{year}/{month}
+
+---
+
+🔔 Firebase Integration
+
+1.This project supports push notifications for upcoming prayers.
+2.Create a Firebase project.
+3.Get your Server Key from the Firebase console.
+4.Add it to appsettings.json under "Firebase".
+5.Devices can register using the /api/Notifications/register endpoint.
+
+---
+🗄 Database Notes
+
+Default: SQL Server (adjust ConnectionStrings for PostgreSQL if needed).
+
+Managed with Entity Framework Core migrations.
+
+Scheduled cleanup of old prayer times is included.
+
+🏗 System Architecture
+
+[Aladhan API] --> [Backend API] --> [Database]
+                                 |
+                                 --> [Firebase] --> [Clients]
+
+---
+
+🤝 Contributing
+1.Pull requests are welcome!
+2.Fork the repo
+3.Create a branch
+4.Commit changes
+5.Open a PR
