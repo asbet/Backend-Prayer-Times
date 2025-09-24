@@ -31,7 +31,7 @@ git clone https://github.com/your-username/prayer-times-backend.git
 cd prayer-times-backend 
 
 
-### 2. Clone the Repository
+### 2. Configure Settings
 Create or edit appsettings.Development.json:
 
 {
