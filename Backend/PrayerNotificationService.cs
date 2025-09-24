@@ -65,26 +65,6 @@ public class PrayerNotificationService : BackgroundService
                                 now.Offset
                             );
 
-                            // Parse string "HH:mm" to today's DateTimeOffset with the same hour and minute
-                            // var parsedTime = DateTimeOffset.TryParseExact(
-                            //     time,
-                            //     "HH:mm",
-                            //     CultureInfo.InvariantCulture,
-                            //     DateTimeStyles.None,
-                            //     out var prayerTime
-                            // )
-                            //     ? prayerTime
-                            //     : DateTimeOffset.MinValue;
-                            //
-                            // if (parsedTime == DateTimeOffset.MinValue) continue; // skip if invalid
-
-                            //todo play with in here 
-                            // var todayTime = new DateTimeOffset(
-                            //     now.Year, now.Month, now.Day,
-                            //     prayerTime.Hour, prayerTime.Minute, 0,
-                            //     now.Offset // keep same timezone offset as now
-                            // );
-
                             var diff = todayTime - now;
 
 
